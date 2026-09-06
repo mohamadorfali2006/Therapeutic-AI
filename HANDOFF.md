@@ -1,6 +1,6 @@
 # HANDOFF — Therapeutic-AI
 
-**Session date:** 2026-09-06 (updated at end of agent-company + product build)
+**Session date:** 2026-09-06 (updated at end of Sprint S1 — company platform live)
 
 ## What was accomplished
 
@@ -8,15 +8,41 @@
 - Scaffolded `C:/Users/PCD/Therapeutic-AI` with full org design (84 roles, 9 functions, `org/`) and documentation set (`docs/00-INDEX` → `10-CHANGELOG`).
 - Initial git history: `d8460dd` scaffold, `e1921fd` handoff.
 
-### Round 2 — Agent-based company + working product (this session)
+### Round 2 — Agent-based company + working product
 - **Agent company (`company/`)**: 9 departments staffed with specialist AI agents — leadership, ai-research, cdd, wetlab, platform-eng, regulated-ai, regulatory, data, business. Each has `00-charter.md`, `01-agents.md` (YAML roster), `02-sop.md`, `03-guardrails.md`. Master constitution: `company/00-OPERATING-MODEL.md`.
-- **Drug Discovery Engine (DDE) MVP** (`product/drug-discovery-engine/`) — the single primary product:
-  - FastAPI backend (`app/main.py`): `/health`, `/api/v1/models`, `/api/v1/predict`, `/api/v1/validate`, `/api/v1/traces/{id}`, static dashboard `/`.
-  - Pure-Python ML baseline (`ml/`): SMILES feature extraction (`features.py`), RandomForest regressor (`baseline.py`), seed dataset (`seed_data.py`), train/evaluate pipelines.
-  - Append-only provenance store (`app/store.py`) — traceability for every prediction + validation.
-  - Validation gate (owned by `company/regulated-ai`): `ml/evaluate.py` computes RMSE/MAE/R2 on locked test split; PASS at R2=0.6583.
-  - Web dashboard (`web/index.html`) — dark/light theme, predict form, trace viewer, models table, health indicator, research-use-only badge.
-  - Infra: `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml`, `.env.example`.
+- **Drug Discovery Engine (DDE) MVP** (`product/drug-discovery-engine/`) — the single primary product: FastAPI backend, pure-Python ML, append-only provenance, validation gate, web dashboard, Docker/CI.
+- Commits: `4ba5a0d` (company + DDE MVP), `0f74df6` (docs), `8ce59c1` (HANDOFF), `39597e1` (Playwright QA).
+- Visual QA 12/12; validation gate PASS (logP-only, R2=0.6583).
+
+### Round 3 — Company platform RUNS (Sprint S1, this session)
+- **`company/platform/run.py`** — company runtime CLI (stdlib only): `sprint plan/list/close`, `task add/start/done/block`, `gate <id> --pass`, `status`, `report --out`. Persistent board: `company/platform/state.json`.
+- **Sprint S1 → DDE v0.2.0**, executed live, closed **7/7 tasks / 7/7 gates PASS**:
+  - logS dataset v2 (`ml/logs_data.py`, 57 compounds, CDD spec, Data provenance docs)
+  - ECFP-style hashed fingerprints (`ml/fingerprints.py`, radius 2, 256 bits, pure Python) — raised logP R2 0.658→0.722
+  - Property-aware trainer (`ml/baseline.py`) + property-routed API (`/api/v1/predict` with `property`; `/api/v1/validate?property=`)
+  - Regulated-AI gate report: `company/regulated-ai/reports/2026-09-06-s1-gates.md` (both models PASS)
+  - Regulatory product status: `company/regulatory/04-product-status.md`
+  - Sprint report: `company/platform/sprint-S1-report.md`
+- **Verified:** 15/15 pytest, both gates PASS (logp R2=0.7222, logS R2=0.6079), live routes 200, Playwright QA **14/14** (incl. property dropdown routing).
+- Commits: `2a83798` (Sprint S1). **Latest: `2a83798`.**
+
+## Key constraints / current state
+- Server normally on **port 8011** (8000 occupied by unrelated knee-OA app, PID varies — never kill it).
+- venv: `C:\Users\PCD\Therapeutic-AI\.venv` (`py -3.13`). Train with `.venv\Scripts\python.exe -m ml.train` from `product/drug-discovery-engine`.
+- Provenance `app/data/*.jsonl` is gitignored (runtime records).
+- Single product = DDE; research-use only, NOT a medical device. PCCP-first posture for future adaptive retraining.
+
+## Blockers / next steps
+- **GitHub push still blocked**: `gh` CLI not installed, no `GH_TOKEN`, no winget. Recovery: install gh → `gh auth login` → `gh repo create Therapeutic-AI --private --source=. --remote=origin --push`.
+- Next sprint candidates (S2): staff Leadership/CEO loop against DDE roadmap, add a 3rd property or real-vs-predicted scatter QA, Docker artifact baking, PCCP pipeline draft (regulatory).
+
+## How to run the company
+```powershell
+.\.venv\Scripts\python.exe company\platform\run.py sprint plan --name "S2 ..." --goal "..."
+.\.venv\Scripts\python.exe company\platform\run.py task add --dept ai-research --title "..."
+.\.venv\Scripts\python.exe company\platform\run.py gate T1 --pass --evidence "..."
+.\.venv\Scripts\python.exe company\platform\run.py status   # board
+```
 
 ## Verification (real proof)
 - `python -m pytest tests -q` → **10 passed** (auto-trains artifact via conftest fixture).
