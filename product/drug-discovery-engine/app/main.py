@@ -30,6 +30,7 @@ from ml.baseline import (
 from ml.evaluate import run_validation
 
 from .store import ProvenanceStore
+from .dashboard_api import router as dashboard_router
 
 logger = logging.getLogger("ddengine")
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
@@ -197,6 +198,13 @@ def create_app() -> FastAPI:
         @app.get("/", include_in_schema=False)
         def index() -> FileResponse:
             return FileResponse(str(web_dir / "index.html"))
+
+        @app.get("/dashboard", include_in_schema=False)
+        def dashboard() -> FileResponse:
+            return FileResponse(str(web_dir / "dashboard.html"))
+
+    # Include dashboard API
+    app.include_router(dashboard_router)
 
     return app
 

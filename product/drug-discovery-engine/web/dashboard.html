@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapeutic-AI | Executive Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="brand">
+                <div class="logo">T-AI</div>
+                <div class="title">Executive Dashboard</div>
+            </div>
+            <div class="topbar-right">
+                <div class="status-indicator">
+                    <span class="status-dot online"></span>
+                    <span>System Online</span>
+                </div>
+                <div class="last-refresh">
+                    Last updated: <span id="last-refresh">--:--:--</span>
+                </div>
+                <button class="btn-refresh" onclick="refreshDashboard()">Refresh</button>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="grid">
+            <!-- DDE Metrics Panel -->
+            <section class="card span-2">
+                <div class="card-header">
+                    <h2>DDE v0.3 Metrics</h2>
+                    <span class="badge success">Live</span>
+                </div>
+                <div class="card-body">
+                    <div class="stats-row">
+                        <div class="stat">
+                            <div class="stat-value" id="dataset-size">130</div>
+                            <div class="stat-label">Compounds</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="properties-count">3</div>
+                            <div class="stat-label">Properties</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="predictions-count">0</div>
+                            <div class="stat-label">Predictions</div>
+                        </div>
+                    </div>
+                    <div class="gauges-row">
+                        <div class="gauge-container">
+                            <canvas id="gauge-logp"></canvas>
+                            <div class="gauge-label">logP R²</div>
+                            <div class="gauge-value" id="r2-logp">0.8295</div>
+                        </div>
+                        <div class="gauge-container">
+                            <canvas id="gauge-logs"></canvas>
+                            <div class="gauge-label">logS R²</div>
+                            <div class="gauge-value" id="r2-logs">0.7974</div>
+                        </div>
+                        <div class="gauge-container">
+                            <canvas id="gauge-tpsa"></canvas>
+                            <div class="gauge-label">TPSA R²</div>
+                            <div class="gauge-value" id="r2-tpsa">0.6188</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Health Panel -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>System Health</h2>
+                    <span class="badge success" id="health-badge">PASS</span>
+                </div>
+                <div class="card-body">
+                    <div class="health-grid">
+                        <div class="health-item">
+                            <div class="health-label">pytest</div>
+                            <div class="health-value" id="pytest-result">16/16</div>
+                            <div class="health-bar"><div class="health-fill" style="width: 100%"></div></div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-label">Regression Gate</div>
+                            <div class="health-value" id="regression-gate">PASS</div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-label">Validation Gate</div>
+                            <div class="health-value" id="validation-gate">PASS</div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-label">Last Commit</div>
+                            <div class="health-value mono" id="last-commit">--</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WetlabLoop Panel -->
+            <section class="card span-2">
+                <div class="card-header">
+                    <h2>WetlabLoop Status</h2>
+                    <span class="badge success">Active</span>
+                </div>
+                <div class="card-body">
+                    <div class="stats-row">
+                        <div class="stat">
+                            <div class="stat-value" id="current-cycle">3</div>
+                            <div class="stat-label">Current Cycle</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="candidates-tested">12</div>
+                            <div class="stat-label">Candidates Tested</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="best-score">0.9091</div>
+                            <div class="stat-label">Best Score</div>
+                        </div>
+                    </div>
+                    <div class="cycle-chart-container">
+                        <canvas id="cycle-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Candidate Programs Panel -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Candidate Programs</h2>
+                    <span class="badge success">3 Active</span>
+                </div>
+                <div class="card-body">
+                    <div class="programs-list" id="programs-list">
+                        <div class="program-item">
+                            <div class="program-name">PROG-001</div>
+                            <div class="program-desc">Oral Drug-Like</div>
+                            <div class="program-score">100.0</div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-name">PROG-002</div>
+                            <div class="program-desc">CNS Penetrant</div>
+                            <div class="program-score">100.0</div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-name">PROG-003</div>
+                            <div class="program-desc">High-Solubility</div>
+                            <div class="program-score">100.0</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Timeline Panel -->
+            <section class="card span-3">
+                <div class="card-header">
+                    <h2>Project Timeline</h2>
+                    <span class="badge success">29/29 Tasks</span>
+                </div>
+                <div class="card-body">
+                    <div class="timeline-bar">
+                        <div class="phase" style="width: 27.6%">
+                            <div class="phase-label">P1</div>
+                            <div class="phase-bar" style="height: 100%"></div>
+                        </div>
+                        <div class="phase" style="width: 31%">
+                            <div class="phase-label">P2</div>
+                            <div class="phase-bar" style="height: 100%"></div>
+                        </div>
+                        <div class="phase" style="width: 20.7%">
+                            <div class="phase-label">P3</div>
+                            <div class="phase-bar" style="height: 100%"></div>
+                        </div>
+                        <div class="phase" style="width: 20.7%">
+                            <div class="phase-label">P4</div>
+                            <div class="phase-bar" style="height: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-legend">
+                        <span class="legend-item"><span class="dot"></span> P1: Leadership (8 tasks)</span>
+                        <span class="legend-item"><span class="dot"></span> P2: Core Platform (9 tasks)</span>
+                        <span class="legend-item"><span class="dot"></span> P3: Science (6 tasks)</span>
+                        <span class="legend-item"><span class="dot"></span> P4: Scale/GTM (6 tasks)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CI/CD Pipeline Panel -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>CI/CD Pipeline</h2>
+                    <span class="badge success" id="cicd-badge">PASS</span>
+                </div>
+                <div class="card-body">
+                    <div class="cicd-info">
+                        <div class="cicd-row">
+                            <span class="cicd-label">Last Run</span>
+                            <span class="cicd-value" id="cicd-last-run">--</span>
+                        </div>
+                        <div class="cicd-row">
+                            <span class="cicd-label">Duration</span>
+                            <span class="cicd-value" id="cicd-duration">2m 30s</span>
+                        </div>
+                        <div class="cicd-row">
+                            <span class="cicd-label">Tests</span>
+                            <span class="cicd-value">16 passed</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
