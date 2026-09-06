@@ -2,6 +2,12 @@
 
 All notable changes. Format: dated entries per completed feature/phase.
 
+## 2026-09-06 — Agent company + Drug Discovery Engine foundation
+- **Added:** `company/` — 9 agent-staffed departments (leadership, ai-research, cdd, wetlab, platform-eng, regulated-ai, regulatory, data, business), each with charter, agent roster, SOPs, guardrails. Master `company/00-OPERATING-MODEL.md` constitution.
+- **Added:** Drug Discovery Engine MVP (`product/drug-discovery-engine/`): FastAPI backend (model registry, prediction, validation gate, provenance/traces), pure-Python ML baseline (features → sklearn RandomForest, seed data, train/evaluate), append-only provenance store, static web dashboard, Dockerfile + docker-compose + CI.
+- **Verified:** 10/10 tests pass; validation gate PASS (R2=0.6583 on locked test split); live routes verified 200 on localhost (health, models, predict, validate, traces, UI).
+- **Note:** GitHub remote + push still pending user authentication (`gh` CLI not installed / no token).
+
 ## 2026-09-06 — Project scaffolding & org design
 - **Added:** initial project skeleton (`docs/`, `org/`).
 - **Added:** full documentation set (00-INDEX → 10-CHANGELOG).

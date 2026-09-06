@@ -1,7 +1,7 @@
 # Therapeutic-AI — Documentation Index
 
 **Company:** AI-powered drug discovery + FDA-cleared Software as a Medical Device (SaMD).
-**Status:** Planning / Org build (see `01-IMPLEMENTATION-PLAN.md`).
+**Status:** Agent-based company built (9 departments) + working Drug Discovery Engine MVP foundation (see `01-IMPLEMENTATION-PLAN.md`).
 
 | Doc | Description |
 |---|---|

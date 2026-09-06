@@ -66,9 +66,10 @@ Accelerate drug discovery with generative/predictive AI **and** ship validated i
 - Commercial partnerships signed.
 
 ## Status tracking
-- [ ] Phase 1 — Pending (approved plan; hiring not started)
-- [ ] Phase 2 — Pending
-- [ ] Phase 3 — Pending
-- [ ] Phase 4 — Pending
+- [x] Phase 0 — Company infrastructure + DDE product foundation (2026-09-06): 9 agent-staffed departments in `company/`; working Drug Discovery Engine MVP (FastAPI + Pure-Python ML baseline + validation gate + web dashboard) with 10 passing tests, live-verified on localhost:8011.
+- [ ] Phase 1 — Leadership & Foundation (pending hiring/staffing)
+- [ ] Phase 2 — Core Platform + Regulated-AI Spine (pending)
+- [ ] Phase 3 — Science Expansion (pending)
+- [ ] Phase 4 — Scale / GTM (pending)
 
 _Dates filled in as phases begin._
