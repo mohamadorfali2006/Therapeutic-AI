@@ -27,22 +27,25 @@ from .extended_fingerprints import (
 )
 from .features import DEFAULT_FEATURE_NAMES, smiles_to_features
 from . import seed_data
+from .expanded_dataset import load_expanded_data
+from .logs_data import load_seed_data as load_logs_data
+from .tpsa_data import load_seed_data as load_tpsa_data
 
 ARTIFACT_DIR = Path(__file__).parent / "artifacts"
 
 PROPERTIES = {
     "logp": {
-        "module": seed_data,
-        "dataset_version": "seed-2026.09.06",
+        "loader": load_expanded_data,
+        "dataset_version": "expanded-2026.09.06",
         "artifact": ARTIFACT_DIR / "baseline_logp_v1.pkl",
     },
     "logS": {
-        "loader": "logs",
+        "loader": load_logs_data,
         "dataset_version": "seed-2026.09.06-v2",
         "artifact": ARTIFACT_DIR / "baseline_logs_v1.pkl",
     },
     "tpsa": {
-        "loader": "tpsa",
+        "loader": load_tpsa_data,
         "dataset_version": "seed-2026.09.06-v3",
         "artifact": ARTIFACT_DIR / "baseline_tpsa_v1.pkl",
     },
@@ -116,12 +119,12 @@ class BaselinePredictor:
 
 def _load_dataset_loader(prop: str):
     if prop == "logp":
-        return seed_data.load_seed_data
+        return load_expanded_data
+    if prop == "logS":
+        return load_logs_data
     if prop == "tpsa":
-        from . import tpsa_data
-        return tpsa_data.load_seed_data
-    from . import logs_data
-    return logs_data.load_seed_data
+        return load_tpsa_data
+    raise KeyError(prop)
 
 
 def smiles_to_extended_features(smiles: str) -> list[float]:

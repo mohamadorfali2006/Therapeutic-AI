@@ -523,7 +523,297 @@
       "closed_at": "2026-09-06T17:44:54+00:00",
       "tasks": [],
       "gates": []
+    },
+    {
+      "id": "S5",
+      "name": "Sprint S4: Science Expansion",
+      "goal": "Stand up full research + wet-lab capacity; begin clinical validation planning. Design\u2192build\u2192test\u2192learn closed loop, first candidate programs, model eval/calibration, validation study protocol, dataset expansion to 100+ compounds, RWE plan.",
+      "status": "closed",
+      "created_at": "2026-09-06T17:53:40+00:00",
+      "closed_at": "2026-09-06T18:06:06+00:00",
+      "tasks": [
+        {
+          "id": "T25",
+          "title": "Design\u2192build\u2192test\u2192learn closed loop (virtual wet-lab)",
+          "dept": "cdd",
+          "owner": "CSO + Wet Lab",
+          "status": "in_progress",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:49+00:00"
+        },
+        {
+          "id": "T26",
+          "title": "First candidate programs active (3 molecules)",
+          "dept": "cdd",
+          "owner": "CDD",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:49+00:00"
+        },
+        {
+          "id": "T27",
+          "title": "Model evaluation/calibration framework",
+          "dept": "regulated-ai",
+          "owner": "Regulated-AI",
+          "status": "in_progress",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:50+00:00"
+        },
+        {
+          "id": "T28",
+          "title": "Validation study protocol draft",
+          "dept": "regulatory",
+          "owner": "CMO + Regulatory",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:50+00:00"
+        },
+        {
+          "id": "T29",
+          "title": "Expand dataset (100+ compounds)",
+          "dept": "data",
+          "owner": "Data",
+          "status": "in_progress",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:50+00:00"
+        },
+        {
+          "id": "T30",
+          "title": "Real-world evidence (RWE) integration plan",
+          "dept": "regulatory",
+          "owner": "CMO",
+          "status": "todo",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:50+00:00"
+        },
+        {
+          "id": "T31",
+          "title": "Phase 3 HANDOFF + CHANGELOG",
+          "dept": "leadership",
+          "owner": "COO",
+          "status": "todo",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:54:50+00:00"
+        },
+        {
+          "id": "T32",
+          "title": "Design\u2192build\u2192test\u2192learn closed loop (virtual wet-lab)",
+          "dept": "wetlab",
+          "owner": "CSO + Wet Lab",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:04+00:00"
+        },
+        {
+          "id": "T33",
+          "title": "First candidate programs active (3 molecules)",
+          "dept": "cdd",
+          "owner": "CDD",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:09+00:00"
+        },
+        {
+          "id": "T34",
+          "title": "Model evaluation/calibration framework",
+          "dept": "regulated-ai",
+          "owner": "Regulated-AI",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:14+00:00"
+        },
+        {
+          "id": "T35",
+          "title": "Validation study protocol draft",
+          "dept": "regulatory",
+          "owner": "CMO + Regulatory",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:19+00:00"
+        },
+        {
+          "id": "T36",
+          "title": "Expand dataset (100+ compounds)",
+          "dept": "data",
+          "owner": "Data",
+          "status": "todo",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:25+00:00"
+        },
+        {
+          "id": "T37",
+          "title": "Real-world evidence (RWE) integration plan",
+          "dept": "regulatory",
+          "owner": "CMO",
+          "status": "todo",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:04:30+00:00"
+        }
+      ],
+      "gates": []
+    },
+    {
+      "id": "S6",
+      "name": "S4: Phase 3 Science Expansion",
+      "goal": "Design\u2192build\u2192test\u2192learn closed loop, 3 candidate programs, calibration framework, validation study protocol, 100+ compound dataset, RWE integration plan",
+      "status": "closed",
+      "created_at": "2026-09-06T18:03:57+00:00",
+      "closed_at": "2026-09-06T18:06:07+00:00",
+      "tasks": [],
+      "gates": []
+    },
+    {
+      "id": "S7",
+      "name": "S7: Phase 3 Science Expansion",
+      "goal": "Design\u2192build\u2192test\u2192learn closed loop, 3 candidate programs, calibration framework, validation study protocol, 100+ compound dataset, RWE integration plan",
+      "status": "closed",
+      "created_at": "2026-09-06T18:06:17+00:00",
+      "closed_at": "2026-09-06T18:18:42+00:00",
+      "tasks": [
+        {
+          "id": "T38",
+          "title": "Design\u2192build\u2192test\u2192learn closed loop (virtual wet-lab)",
+          "dept": "wetlab",
+          "owner": "CSO + Wet Lab",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:26+00:00"
+        },
+        {
+          "id": "T39",
+          "title": "First candidate programs active (3 molecules)",
+          "dept": "cdd",
+          "owner": "CDD",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:31+00:00"
+        },
+        {
+          "id": "T40",
+          "title": "Model evaluation/calibration framework",
+          "dept": "regulated-ai",
+          "owner": "Regulated-AI",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:37+00:00"
+        },
+        {
+          "id": "T41",
+          "title": "Validation study protocol draft",
+          "dept": "regulatory",
+          "owner": "CMO + Regulatory",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:44+00:00"
+        },
+        {
+          "id": "T42",
+          "title": "Expand dataset (100+ compounds)",
+          "dept": "data",
+          "owner": "Data",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:50+00:00"
+        },
+        {
+          "id": "T43",
+          "title": "Phase 3 HANDOFF + CHANGELOG",
+          "dept": "leadership",
+          "owner": "COO",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T18:06:56+00:00"
+        }
+      ],
+      "gates": [
+        {
+          "task_id": "T38",
+          "pass": true,
+          "verdict": "Design\u2192build\u2192test\u2192learn closed loop built (WetLabLoop class: design candidates, virtual synthesis, virtual testing, learning; 3 cycles, 12 candidates tested)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:08:07+00:00",
+          "evidence": "product/drug-discovery-engine/ml/wetlab_loop.py"
+        },
+        {
+          "task_id": "T39",
+          "pass": true,
+          "verdict": "3 candidate programs active (PROG-001 Oral Drug-Like, PROG-002 CNS Penetrant, PROG-003 High-Solubility), 6 candidates total, scored and tracked",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:09:16+00:00",
+          "evidence": "product/drug-discovery-engine/ml/candidate_programs.py"
+        },
+        {
+          "task_id": "T40",
+          "pass": true,
+          "verdict": "Model evaluation/calibration framework built (CalibrationResult, DriftReport, calibration report generation, drift detection)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:10:13+00:00",
+          "evidence": "product/drug-discovery-engine/ml/framework.py"
+        },
+        {
+          "task_id": "T41",
+          "pass": true,
+          "verdict": "Validation study protocol draft complete (prospective controlled single-blind, 150 patients, 3 sites, primary endpoint time-to-appropriate-therapy, statistical analysis plan)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:10:53+00:00",
+          "evidence": "company/regulatory/07-validation-study-protocol.md"
+        },
+        {
+          "task_id": "T42",
+          "pass": true,
+          "verdict": "Expanded dataset (130 compounds, load_expanded_data) integrated for logP training. R2=0.8295 on 26 test compounds. All 3 models PASS.",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:17:30+00:00",
+          "evidence": "product/drug-discovery-engine/ml/expanded_dataset.py"
+        },
+        {
+          "task_id": "T43",
+          "pass": true,
+          "verdict": "Phase 3 HANDOFF + CHANGELOG updated (HANDOFF.md and docs/10-CHANGELOG.md reflect Sprint S7 progress \u2014 5/6 tasks complete)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T18:18:37+00:00",
+          "evidence": "HANDOFF.md"
+        }
+      ]
     }
   ],
-  "next_task_seq": 25
+  "next_task_seq": 44
 }

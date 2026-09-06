@@ -552,7 +552,7 @@
     "maccs_P_atom"
   ],
   "n_features": 547,
-  "created_at": "2026-09-06T17:38:03.116147+00:00",
+  "created_at": "2026-09-06T18:16:02.040010+00:00",
   "n_records": 57,
   "test_size": 0.2,
   "train_records": 45,
