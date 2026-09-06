@@ -20,8 +20,12 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
+from .extended_fingerprints import (
+    combined_feature_count,
+    extended_fingerprint_feature_names,
+    smiles_to_extended_fingerprint,
+)
 from .features import DEFAULT_FEATURE_NAMES, smiles_to_features
-from .fingerprints import fingerprint_feature_names, smiles_to_fingerprint
 from . import seed_data
 
 ARTIFACT_DIR = Path(__file__).parent / "artifacts"
@@ -37,12 +41,17 @@ PROPERTIES = {
         "dataset_version": "seed-2026.09.06-v2",
         "artifact": ARTIFACT_DIR / "baseline_logs_v1.pkl",
     },
+    "tpsa": {
+        "loader": "tpsa",
+        "dataset_version": "seed-2026.09.06-v3",
+        "artifact": ARTIFACT_DIR / "baseline_tpsa_v1.pkl",
+    },
 }
 
 SPLIT_SEED = 42
 MODEL_VERSION = "baseline-v1.0.0"
 
-FEATURE_NAMES = list(DEFAULT_FEATURE_NAMES) + fingerprint_feature_names()
+FEATURE_NAMES = list(DEFAULT_FEATURE_NAMES) + extended_fingerprint_feature_names()
 
 DEFAULT_ARTIFACT = PROPERTIES["logp"]["artifact"]
 
@@ -108,13 +117,16 @@ class BaselinePredictor:
 def _load_dataset_loader(prop: str):
     if prop == "logp":
         return seed_data.load_seed_data
+    if prop == "tpsa":
+        from . import tpsa_data
+        return tpsa_data.load_seed_data
     from . import logs_data
     return logs_data.load_seed_data
 
 
 def smiles_to_extended_features(smiles: str) -> list[float]:
-    """Count descriptors + ECFP-style fingerprint."""
-    return list(smiles_to_features(smiles)) + list(smiles_to_fingerprint(smiles))
+    """Count descriptors + extended fingerprint (ECFP + MACCS)."""
+    return list(smiles_to_features(smiles)) + list(smiles_to_extended_fingerprint(smiles))
 
 
 def build_dataset(prop: str = "logp"):
@@ -141,7 +153,7 @@ def train_and_persist(prop: str = "logp",
         X, y, test_size=0.2, random_state=SPLIT_SEED, shuffle=True
     )
     rf = RandomForestRegressor(
-        n_estimators=200, max_depth=None, random_state=SPLIT_SEED, n_jobs=1
+        n_estimators=500, max_depth=12, min_samples_leaf=3, random_state=SPLIT_SEED, n_jobs=1
     )
     rf.fit(X_train, y_train)
 

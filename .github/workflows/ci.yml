@@ -1,4 +1,4 @@
-# Drug Discovery Engine — CI
+# Drug Discovery Engine — CI with Regression Gates
 
 name: dde-ci
 
@@ -6,11 +6,31 @@ on:
   push:
     paths:
       - "product/drug-discovery-engine/**"
+      - ".github/workflows/ci.yml"
   pull_request:
+    paths:
+      - "product/drug-discovery-engine/**"
+      - ".github/workflows/ci.yml"
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: product/drug-discovery-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install linting tools
+        run: pip install ruff
+      - name: Lint
+        run: ruff check app ml tests
+
   test:
     runs-on: ubuntu-latest
+    needs: lint
     strategy:
       matrix:
         python-version: ["3.13"]
@@ -29,6 +49,56 @@ jobs:
       - name: Train baseline
         run: python -m ml.train
       - name: Test
-        run: python -m pytest tests -q
+        run: python -m pytest tests -q --tb=short
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: product/drug-discovery-engine/.pytest_cache/
+
+  validation-gate:
+    runs-on: ubuntu-latest
+    needs: test
+    defaults:
+      run:
+        working-directory: product/drug-discovery-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Train baseline
+        run: python -m ml.train
       - name: Validation gate
         run: python -m ml.evaluate
+      - name: Regression gate
+        run: python -m ml.regression_gate
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: product/drug-discovery-engine/ml/artifacts/
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: validation-gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    defaults:
+      run:
+        working-directory: product/drug-discovery-engine
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t dde:${{ github.sha }} .
+      - name: Test Docker image
+        run: |
+          docker run -d -p 8000:8000 --name dde-test dde:${{ github.sha }}
+          sleep 5
+          curl -f http://localhost:8000/health || exit 1
+          docker stop dde-test

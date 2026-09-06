@@ -42,6 +42,15 @@ def test_predict_valid_smiles_logS():
     assert body["model_name"] == "baseline-logS"
 
 
+def test_predict_valid_smiles_tpsa():
+    r = client.post("/api/v1/predict", json={"smiles": "CCO", "property": "tpsa"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["property"] == "tpsa"
+    assert "value" in body["output"]
+    assert body["model_name"] == "baseline-tpsa"
+
+
 def test_predict_unknown_property_503():
     r = client.post("/api/v1/predict", json={"smiles": "CCO", "property": "nope"})
     assert r.status_code == 503

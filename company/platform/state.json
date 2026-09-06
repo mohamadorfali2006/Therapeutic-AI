@@ -158,7 +158,372 @@
           "evidence": "company/regulatory/04-product-status.md"
         }
       ]
+    },
+    {
+      "id": "S2",
+      "name": "S2: Phase 1 Leadership & Foundation",
+      "goal": "Stand up executive team + core platform/data/regulatory leads; FDA Q-Submission strategy, ISO 13485 QMS skeleton, IEC 62304 design-control framework, data governance principles, v1 docs, leadership steering cycle, automated reporting to CEO + Telegram",
+      "status": "closed",
+      "created_at": "2026-09-06T16:03:15+00:00",
+      "closed_at": "2026-09-06T16:13:34+00:00",
+      "tasks": [
+        {
+          "id": "T8",
+          "title": "FDA Q-Submission strategy + predicate mining",
+          "dept": "regulatory",
+          "owner": "Regulatory Affairs Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:21+00:00"
+        },
+        {
+          "id": "T9",
+          "title": "ISO 13485 QMS skeleton",
+          "dept": "regulated-ai",
+          "owner": "QMS Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:30+00:00"
+        },
+        {
+          "id": "T10",
+          "title": "IEC 62304 design-control framework",
+          "dept": "regulated-ai",
+          "owner": "V&V Test Engineer Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:35+00:00"
+        },
+        {
+          "id": "T11",
+          "title": "Data governance principles (provenance, training/test separation)",
+          "dept": "regulated-ai",
+          "owner": "Data Governance Engineer Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:44+00:00"
+        },
+        {
+          "id": "T12",
+          "title": "Update docs/05-DATABASE.md to v1",
+          "dept": "data",
+          "owner": "Head of Data",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:52+00:00"
+        },
+        {
+          "id": "T13",
+          "title": "Update docs/02-ARCHITECTURE.md to v1",
+          "dept": "platform-eng",
+          "owner": "CTO Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:03:59+00:00"
+        },
+        {
+          "id": "T14",
+          "title": "Staff leadership agents into weekly steering cycle",
+          "dept": "leadership",
+          "owner": "CEO Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:04:06+00:00"
+        },
+        {
+          "id": "T15",
+          "title": "Automated reporting flow to CEO + Telegram group",
+          "dept": "leadership",
+          "owner": "COO Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T16:04:11+00:00"
+        }
+      ],
+      "gates": [
+        {
+          "task_id": "T8",
+          "pass": true,
+          "verdict": "FDA Q-Submission strategy + predicate mining complete (510(k)/De Novo pathway analysis, 5 predicate devices identified, Q-Sub roadmap, risk management per ISO 14971)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:05:49+00:00",
+          "evidence": "company/regulatory/05-fda-qsubmission-strategy.md"
+        },
+        {
+          "task_id": "T9",
+          "pass": true,
+          "verdict": "ISO 13485 QMS skeleton complete (12 SOPs defined, documentation hierarchy, roles, metrics, roadmap)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:07:04+00:00",
+          "evidence": "company/regulated-ai/04-qms-skeleton.md"
+        },
+        {
+          "task_id": "T10",
+          "pass": true,
+          "verdict": "IEC 62304 design-control framework complete (clause-by-clause mapping, safety classification Class B, traceability matrix, risk management integration)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:08:13+00:00",
+          "evidence": "company/regulated-ai/06-iec62304-framework.md"
+        },
+        {
+          "task_id": "T11",
+          "pass": false,
+          "verdict": "rejected",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:09:15+00:00",
+          "evidence": ""
+        },
+        {
+          "task_id": "T11",
+          "pass": true,
+          "verdict": "Data governance principles complete (provenance, training/test separation, data quality, versioning, lineage, retention, security)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:09:21+00:00",
+          "evidence": "company/regulated-ai/07-data-governance-principles.md"
+        },
+        {
+          "task_id": "T12",
+          "pass": true,
+          "verdict": "docs/05-DATABASE.md updated to v1 (logical data model, current implementation, data flow, versioning, training/test separation, quality, security, retention)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:10:07+00:00",
+          "evidence": "docs/05-DATABASE.md"
+        },
+        {
+          "task_id": "T13",
+          "pass": true,
+          "verdict": "docs/02-ARCHITECTURE.md updated to v1 (system overview, data flow, principles, component responsibilities, DDE architecture, API endpoints, ML pipeline, deployment environments, security, regulatory alignment)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:10:55+00:00",
+          "evidence": "docs/02-ARCHITECTURE.md"
+        },
+        {
+          "task_id": "T14",
+          "pass": true,
+          "verdict": "Leadership agents staffed into weekly steering cycle (CEO cron job active, department reporting format defined, S2 cycle operating record established)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:11:58+00:00",
+          "evidence": "company/leadership/04-steering-cycle.md"
+        },
+        {
+          "task_id": "T15",
+          "pass": true,
+          "verdict": "Automated reporting flow built (CEO cron active, report types defined, Telegram template ready \u2014 pending bot credentials from user)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T16:13:20+00:00",
+          "evidence": "company/leadership/05-reporting-flow.md"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "S3: Phase 2 Core Platform + Regulated-AI Spine",
+      "goal": "Build CI/CD-backed validation pipeline, data catalog + lineage, 3rd demo property, richer fingerprints, Docker artifact baking, PCCP pipeline draft, GPU cluster spec, Q-Submission draft, update docs/07-HOW-TO-RUN.md v1",
+      "status": "closed",
+      "created_at": "2026-09-06T17:21:11+00:00",
+      "closed_at": "2026-09-06T17:43:57+00:00",
+      "tasks": [
+        {
+          "id": "T16",
+          "title": "CI/CD-backed validation pipeline (regression gates on every PR)",
+          "dept": "platform-eng",
+          "owner": "Platform Engineer Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:16+00:00"
+        },
+        {
+          "id": "T17",
+          "title": "Data catalog + lineage system (v1)",
+          "dept": "regulated-ai",
+          "owner": "Data Governance Engineer Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:24+00:00"
+        },
+        {
+          "id": "T18",
+          "title": "3rd demo property (molecular weight or TPSA)",
+          "dept": "cdd",
+          "owner": "CDD Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:31+00:00"
+        },
+        {
+          "id": "T19",
+          "title": "Richer fingerprints (extended ECFP or MACCS-style)",
+          "dept": "ai-research",
+          "owner": "Predictive Modeling Scientist Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:40+00:00"
+        },
+        {
+          "id": "T20",
+          "title": "Docker artifact baking (bake model into image)",
+          "dept": "platform-eng",
+          "owner": "Platform Engineer Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:48+00:00"
+        },
+        {
+          "id": "T21",
+          "title": "PCCP pipeline draft (Modification Protocol + specification envelope)",
+          "dept": "regulated-ai",
+          "owner": "QMS Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:21:56+00:00"
+        },
+        {
+          "id": "T22",
+          "title": "GPU cluster spec (for future training infra)",
+          "dept": "platform-eng",
+          "owner": "CTO Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:22:03+00:00"
+        },
+        {
+          "id": "T23",
+          "title": "Q-Submission draft (based on Phase 1 strategy)",
+          "dept": "regulatory",
+          "owner": "Regulatory Affairs Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:22:11+00:00"
+        },
+        {
+          "id": "T24",
+          "title": "Update docs/07-HOW-TO-RUN.md to v1",
+          "dept": "leadership",
+          "owner": "COO Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T17:22:17+00:00"
+        }
+      ],
+      "gates": [
+        {
+          "task_id": "T16",
+          "pass": true,
+          "verdict": "CI/CD-backed validation pipeline built (GitHub Actions: lint \u2192 test \u2192 validation-gate \u2192 docker, regression gate module ml/regression_gate.py with baseline comparison)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:24:12+00:00",
+          "evidence": "product/drug-discovery-engine/ml/regression_gate.py"
+        },
+        {
+          "task_id": "T17",
+          "pass": true,
+          "verdict": "Data catalog + lineage system v1 built (DatasetRegistry, SplitRegistry, LineageTracker \u2014 file-based, append-only, integrity verification)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:26:38+00:00",
+          "evidence": "product/drug-discovery-engine/ml/catalog.py"
+        },
+        {
+          "task_id": "T18",
+          "pass": true,
+          "verdict": "3rd demo property TPSA added (R2=0.6093, MAE=8.18 \u2014 both pass). All 3 models now PASS: logp R2=0.7676, logS R2=0.6497, tpsa R2=0.6093. 16/16 tests pass.",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:35:29+00:00",
+          "evidence": "product/drug-discovery-engine/ml/tpsa_data.py"
+        },
+        {
+          "task_id": "T19",
+          "pass": true,
+          "verdict": "Extended fingerprints built (512-bit ECFP radius-3 + 18 MACCS substructure features = 530 total fp features). All models improved: logp R2=0.8949, logS R2=0.7974, tpsa R2=0.6188",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:38:26+00:00",
+          "evidence": "product/drug-discovery-engine/ml/extended_fingerprints.py"
+        },
+        {
+          "task_id": "T20",
+          "pass": true,
+          "verdict": "Docker artifact baking built (multi-stage Dockerfile: training stage bakes artifacts, runtime stage copies them; CI builds and tests on every push to master)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:39:47+00:00",
+          "evidence": "product/drug-discovery-engine/Dockerfile"
+        },
+        {
+          "task_id": "T21",
+          "pass": true,
+          "verdict": "PCCP pipeline draft complete (Modification Protocol, Specification Envelope, Impact Assessment, Reversion Plan, Performance Monitoring \u2014 per FDA PCCP Guidance Dec 2024)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:41:12+00:00",
+          "evidence": "company/regulated-ai/08-pccp-pipeline-draft.md"
+        },
+        {
+          "task_id": "T22",
+          "pass": true,
+          "verdict": "GPU cluster spec complete (A100/H100, 4-8 nodes, cloud vs on-prem comparison, software stack, cost optimization, timeline)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:42:01+00:00",
+          "evidence": "company/platform-eng/04-gpu-cluster-spec.md"
+        },
+        {
+          "task_id": "T23",
+          "pass": true,
+          "verdict": "Q-Submission draft complete (Pre-Sub package: device description, predicate comparison, testing strategy, PCCP summary, labeling, questions for FDA)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:42:58+00:00",
+          "evidence": "company/regulatory/06-qsubmission-draft.md"
+        },
+        {
+          "task_id": "T24",
+          "pass": true,
+          "verdict": "docs/07-HOW-TO-RUN.md updated to v1 (repo layout, tech stack, env vars, run commands, Docker, test, CI/CD, verification)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T17:43:49+00:00",
+          "evidence": "docs/07-HOW-TO-RUN.md"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "S3-Cleanup",
+      "goal": "Close remaining in-progress tasks",
+      "status": "closed",
+      "created_at": "2026-09-06T17:44:15+00:00",
+      "closed_at": "2026-09-06T17:44:54+00:00",
+      "tasks": [],
+      "gates": []
     }
   ],
-  "next_task_seq": 8
+  "next_task_seq": 25
 }
