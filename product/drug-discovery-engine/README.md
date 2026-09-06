@@ -1,5 +1,9 @@
 # Drug Discovery Engine — run book (research platform foundation)
 
+Demo properties (v0.2): `logp` and `logS` — RandomForest regressors on
+17 count descriptors + 256 ECFP-style hashed fingerprint bits (pure Python).
+Artifacts: `ml/artifacts/baseline_logp_v1.pkl`, `baseline_logs_v1.pkl`.
+
 ## Prereqs
 - Python 3.13 (py -3.13 on Windows) with packages in `requirements.txt`.
 
@@ -9,13 +13,13 @@ cd product/drug-discovery-engine
 py -3.13 -m pip install -r requirements.txt
 ```
 
-## Train baseline model (AI Research / CDD-demo)
+## Train models (AI Research / CDD-demo)
 ```bash
 py -3.13 -m ml.train
 ```
-Persists `ml/artifacts/baseline_v1.pkl` + `baseline_v1_meta.json`.
+Persists `baseline_logp_v1.pkl`, `baseline_logs_v1.pkl` + `*_meta.json`.
 
-## Evaluate + validation gate
+## Evaluate + validation gates (per property)
 ```bash
 py -3.13 -m ml.evaluate
 ```
@@ -26,6 +30,7 @@ py -3.13 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 - Dashboard: http://localhost:8000/
 - Docs: http://localhost:8000/docs
+- Predict: `POST /api/v1/predict {"smiles":"CCO","property":"logS"}`
 
 ## Test
 ```bash
@@ -39,9 +44,15 @@ py -3.13 -m pip install playwright
 py -3.13 -m playwright install chromium
 py -3.13 tests/qa_dashboard.py
 ```
-Runs a Playwright audit: title, health indicator, models table, predict flow,
-theme toggle (dark/light), trace fetch, invalid-SMILES 422. Screenshots saved to
-`tests/qa-screenshots/`.
+Runs a Playwright audit: title, health indicator, models table, predict flow
+(logp + logS via dropdown), theme toggle (dark/light), trace fetch,
+invalid-SMILES 422. Screenshots saved to `tests/qa-screenshots/`.
+
+## Company runtime (platform)
+```bash
+py -3.13 ../../company/platform/run.py status    # sprint board
+py -3.13 ../../company/platform/run.py report    # last sprint report
+```
 
 ## Docker
 ```bash

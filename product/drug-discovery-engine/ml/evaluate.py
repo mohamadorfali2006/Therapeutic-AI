@@ -29,6 +29,7 @@ DEFAULT_THRESHOLDS = {
 class ValidationReport:
     model_version: str
     dataset_version: str
+    property: str
     n_test: int
     rmse: float
     mae: float
@@ -46,8 +47,8 @@ class ValidationReport:
         return json.dumps(self.to_dict(), indent=2)
 
 
-def _locked_test_split():
-    X, y = build_dataset()
+def _locked_test_split(prop: str):
+    X, y = build_dataset(prop)
     _, X_test, _, y_test = train_test_split(
         X, y, test_size=0.2, random_state=SPLIT_SEED, shuffle=True
     )
@@ -56,12 +57,12 @@ def _locked_test_split():
 
 def run_validation(predictor: BaselinePredictor,
                    thresholds: dict | None = None) -> ValidationReport:
-    """Evaluate on the locked test split and produce a pass/fail verdict."""
+    """Evaluate on the locked split for the predictor's property and verdict."""
     thr = dict(DEFAULT_THRESHOLDS)
     if thresholds:
         thr.update(thresholds)
 
-    X_test, y_test = _locked_test_split()
+    X_test, y_test = _locked_test_split(predictor.property_name)
     pred = predictor.model.predict(X_test)
 
     rmse = float(np.sqrt(mean_squared_error(y_test, pred)))
@@ -91,6 +92,7 @@ def run_validation(predictor: BaselinePredictor,
     return ValidationReport(
         model_version=predictor.version,
         dataset_version=predictor.dataset_version,
+        property=predictor.property_name,
         n_test=int(len(y_test)),
         rmse=round(rmse, 4),
         mae=round(mae, 4),
@@ -104,8 +106,10 @@ def run_validation(predictor: BaselinePredictor,
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from .baseline import load_default
+    from .baseline import load_all
 
-    report = run_validation(load_default())
-    print(report.to_json())
-    print("PASS" if report.passed else "FAIL")
+    for prop, predictor in sorted(load_all().items()):
+        report = run_validation(predictor)
+        print(f"== {prop} ==")
+        print(report.to_json())
+        print("PASS" if report.passed else "FAIL")

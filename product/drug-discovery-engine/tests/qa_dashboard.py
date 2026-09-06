@@ -115,7 +115,23 @@ async def main():
         err_status = resp.status
         log("invalid SMILES -> 422", err_status == 422, f"status={err_status}")
 
-        # 8. Full-page screenshots both themes
+        # 8. Property routing via dropdown (logS)
+        sel = page.locator("select#propSelect, select").first
+        opts = await sel.locator("option").all_inner_texts() if await sel.count() else []
+        log("properties in selector", any("logS" in o for o in opts), f"options={opts}")
+        if any("logS" in o for o in opts):
+            await sel.select_option(index=1)
+            await page.fill("input#smiles, input[placeholder*='SMILES'], input[type='text']", "CCCCCC")
+            for i in range(await buttons.count()):
+                txt = (await buttons.nth(i).inner_text()).strip().lower()
+                if "predict" in txt or "run" in txt:
+                    await buttons.nth(i).click()
+                    break
+            await page.wait_for_timeout(1500)
+            body = await page.locator("body").inner_text()
+            log("logS prediction rendered", "logS" in body, "property shown")
+
+        # 9. Full-page screenshots both themes
         theme_cls = await page.evaluate("document.documentElement.className")
         await page.screenshot(path=str(SHOT_DIR / "05-full-current-theme.png"), full_page=True)
 

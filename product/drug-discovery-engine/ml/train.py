@@ -1,10 +1,11 @@
-"""Train and persist the DDE baseline model artifact.
+"""Train and persist all DDE model artifacts.
 
 Usage:
     python -m ml.train
 """
-from ml.baseline import train_and_persist
+from ml.baseline import PROPERTIES, train_and_persist
 
 if __name__ == "__main__":
-    p = train_and_persist()
-    print(f"trained and persisted {p.version} -> ml/artifacts/")
+    for prop in PROPERTIES:
+        p = train_and_persist(prop)
+        print(f"trained and persisted {p.version} ({p.property_name}) -> ml/artifacts/")

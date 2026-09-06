@@ -33,8 +33,12 @@ Because the product includes **FDA-cleared SaMD**, testing has two tracks:
 - Phase 4: submission-ready V&V + post-market plan.
 
 ## Current status (DDE foundation)
-- **10 pytest tests** pass (backend: health, predict valid/invalid, trace roundtrip, models list, validation gate, UI served, artifact present).
-- **Regulated validation gate** PASS on locked test split: R2=0.6583, RMSE=0.8943, MAE=0.5293 (thresholds R2≥0.5, MAE≤20% of range) — `ml/evaluate.py`.
-- **Playwright Visual QA (`tests/qa_dashboard.py`)**: 12/12 checks pass — title, health indicator, models table, predict flow renders value, theme toggle switches data-theme + canvas (`#0A0A0B` ↔ `#F7F6F3`), trace fetch button, invalid SMILES → 422.
+- **15 pytest tests** pass (backend: health, logp + logS predict, unknown property 503, invalid SMILES 422, trace roundtrip both properties, models list, validate per-model + all, fingerprint determinism, UI served, artifacts present).
+- **Regulated validation gates** PASS on locked test splits — `ml/evaluate.py`:
+  - baseline-logp: R2=0.7222, RMSE=0.8063, MAE=0.4780 (dataset seed-2026.09.06)
+  - baseline-logS: R2=0.6079, RMSE=0.8576, MAE=0.5242 (dataset seed-2026.09.06-v2)
+  - Thresholds: R2>=0.5, MAE<=20% of range. Full report: `company/regulated-ai/reports/2026-09-06-s1-gates.md`.
+- **Playwright Visual QA (`tests/qa_dashboard.py`)**: 14/14 checks pass — title, health, models table, predict (logp + logS via dropdown), theme toggle light canvas `#F7F6F3`, trace fetch, invalid SMILES 422.
+- **Company runtime**: `python company/platform/run.py status` (S1 closed 7/7, all gates PASS).
 
 _This document is living; expanded with concrete test suites as code lands._

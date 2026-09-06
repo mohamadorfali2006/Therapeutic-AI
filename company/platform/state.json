@@ -1,0 +1,164 @@
+{
+  "company": "Therapeutic-AI",
+  "product": "Drug Discovery Engine (DDE)",
+  "constitution": "../00-OPERATING-MODEL.md",
+  "departments": [
+    "leadership",
+    "ai-research",
+    "cdd",
+    "wetlab",
+    "platform-eng",
+    "regulated-ai",
+    "regulatory",
+    "data",
+    "business"
+  ],
+  "sprints": [
+    {
+      "id": "S1",
+      "name": "Sprint 1: DDE v0.2",
+      "goal": "Expand DDE: add 2nd property (logS solubility proxy) + richer fingerprints + property-routing in API",
+      "status": "closed",
+      "created_at": "2026-09-06T14:35:01+00:00",
+      "closed_at": "2026-09-06T14:45:09+00:00",
+      "tasks": [
+        {
+          "id": "T1",
+          "title": "logS solubility proxy: define approximate target set + domain justification",
+          "dept": "cdd",
+          "owner": "Molecular Design Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T2",
+          "title": "ECFP-style hashed fingerprints (pure Python) in ml/fingerprints.py",
+          "dept": "ai-research",
+          "owner": "Predictive Modeling Scientist Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T3",
+          "title": "Property-aware trainer: train property-specific artifacts (logp + logs)",
+          "dept": "ai-research",
+          "owner": "Predictive Modeling Scientist Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T4",
+          "title": "Property routing in /api/v1/predict (property param + artifact selection)",
+          "dept": "platform-eng",
+          "owner": "Platform Engineer Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T5",
+          "title": "Dataset versioning: seed-2026.09.06-v2 with logS; provenance",
+          "dept": "data",
+          "owner": "Data Ops Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T6",
+          "title": "Validation gate for logS model: metrics + thresholds report",
+          "dept": "regulated-ai",
+          "owner": "Validation Scientist Agent",
+          "status": "done",
+          "priority": "high",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        },
+        {
+          "id": "T7",
+          "title": "Update v0.2 status + research-use disclaimer",
+          "dept": "regulatory",
+          "owner": "Regulatory Affairs Agent",
+          "status": "done",
+          "priority": "medium",
+          "outputs": [],
+          "evidence": [],
+          "created_at": "2026-09-06T14:36:25+00:00"
+        }
+      ],
+      "gates": [
+        {
+          "task_id": "T1",
+          "pass": true,
+          "verdict": "logS dataset accepted (57 records, range -4.8..-0.1)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:46+00:00",
+          "evidence": "ml/logs_data.py parses; matches seed_data.py"
+        },
+        {
+          "task_id": "T2",
+          "pass": true,
+          "verdict": "Fingerprints deterministic, ECFP-style, no RDKit",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:46+00:00",
+          "evidence": "ml/fingerprints.py + test_fingerprint_deterministic_and_size"
+        },
+        {
+          "task_id": "T5",
+          "pass": true,
+          "verdict": "Dataset v2 versioned and immutable",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:46+00:00",
+          "evidence": "company/data/05-logs-provenance.md"
+        },
+        {
+          "task_id": "T3",
+          "pass": true,
+          "verdict": "Both models trained; features 17 counts + 256 fp",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:50+00:00",
+          "evidence": "15/15 pytest; ml/artifacts/baseline_{logp,logs}_v1.pkl"
+        },
+        {
+          "task_id": "T4",
+          "pass": true,
+          "verdict": "Property routing live; unknown property 503",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:50+00:00",
+          "evidence": "test_predict_unknown_property_503 + live /api/v1/predict"
+        },
+        {
+          "task_id": "T6",
+          "pass": true,
+          "verdict": "BOTH gates PASS (logp R2=0.722, logS R2=0.608)",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:51+00:00",
+          "evidence": "company/regulated-ai/reports/2026-09-06-s1-gates.md"
+        },
+        {
+          "task_id": "T7",
+          "pass": true,
+          "verdict": "v0.2 research-use status documented",
+          "reviewer": "regulated-ai",
+          "timestamp": "2026-09-06T14:44:51+00:00",
+          "evidence": "company/regulatory/04-product-status.md"
+        }
+      ]
+    }
+  ],
+  "next_task_seq": 8
+}

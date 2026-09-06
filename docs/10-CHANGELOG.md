@@ -2,6 +2,16 @@
 
 All notable changes. Format: dated entries per completed feature/phase.
 
+## 2026-09-06 — Sprint S1 closed: DDE v0.2 (company platform runs live)
+- **Company runtime added:** `company/platform/run.py` (CLI state machine: plan sprints, dispatch tasks by department, record Regulated-AI gates, status board, sprint report). Persistent state in `company/platform/state.json`.
+- **Sprint S1 executed:** 7 tasks, 5 departments, all gated PASS, closed 7/7. Report: `company/platform/sprint-S1-report.md`.
+- **Product v0.2.0 (DDE):**
+  - 2nd demo property **logS** (aqueous solubility proxy) + property-routed API (`/api/v1/predict?property=logp|logS`), model registry `baseline-logp` / `baseline-logS`.
+  - Dataset v2 `seed-2026.09.06-v2` (57 compounds, logS) with provenance doc.
+  - ECFP-style hashed fingerprints (pure Python, radius 2, 256 bits) in `ml/fingerprints.py` — raised logP R2 0.658 → 0.722.
+  - `/api/v1/validate` returns per-model gates (all at once or `?property=`, 503 on unknown property).
+- **Verified:** 15/15 pytest; both validation gates PASS (logp R2=0.7222, logS R2=0.6079); live routes on 8011 all 200; Playwright QA **14/14** (incl. property dropdown routing + dual-theme).
+
 ## 2026-09-06 — Dashboard Visual QA passed
 - **Added:** Playwright visual-QA suite (`product/drug-discovery-engine/tests/qa_dashboard.py`) + screenshots in `tests/qa-screenshots/`.
 - **Verified:** 12/12 checks pass including theme toggle (dark `#0A0A0B` ↔ light `#F7F6F3`), predict flow renders value, trace fetch, invalid SMILES → 422. Screenshots saved for human review (model lacks image input).
