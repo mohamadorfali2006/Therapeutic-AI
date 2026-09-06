@@ -23,3 +23,6 @@ venv/
 dist/
 build/
 coverage/
+
+# DDE runtime data (provenance/traces are local records, append-only; not committed)
+product/drug-discovery-engine/app/data/

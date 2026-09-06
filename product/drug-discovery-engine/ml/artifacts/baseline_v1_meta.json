@@ -1,0 +1,31 @@
+{
+  "model_version": "baseline-v1.0.0",
+  "dataset_version": "seed-2026.09.06",
+  "property": "logp",
+  "features": [
+    "heavy_atoms",
+    "carbon",
+    "nitrogen",
+    "oxygen",
+    "sulfur",
+    "phosphorus",
+    "halogen",
+    "aromatic_atoms",
+    "aliphatic_atoms",
+    "single_bonds",
+    "double_bonds",
+    "triple_bonds",
+    "aromatic_bonds",
+    "branches",
+    "rings_approx",
+    "charge",
+    "mw_proxy"
+  ],
+  "created_at": "2026-09-06T14:20:05.318331+00:00",
+  "n_records": 57,
+  "test_size": 0.2,
+  "train_records": 45,
+  "test_records": 12,
+  "split_seed": 42,
+  "split_lock": "deterministic:train_test_split(seed=42)"
+}

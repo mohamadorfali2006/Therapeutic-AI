@@ -1,0 +1,34 @@
+# Drug Discovery Engine — CI
+
+name: dde-ci
+
+on:
+  push:
+    paths:
+      - "product/drug-discovery-engine/**"
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+    defaults:
+      run:
+        working-directory: product/drug-discovery-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Train baseline
+        run: python -m ml.train
+      - name: Test
+        run: python -m pytest tests -q
+      - name: Validation gate
+        run: python -m ml.evaluate

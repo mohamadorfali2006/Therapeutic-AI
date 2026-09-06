@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drug Discovery Engine</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0B;--surface:rgba(255,255,255,0.04);--surface-hover:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);--text:#E8E6E3;--text-muted:#9B9A97;
+  --accent:#C9A227;--accent-dim:rgba(201,162,39,0.15);--accent-text:#C9A227;
+  --card-bg:rgba(255,255,255,0.03);--card-border:rgba(255,255,255,0.06);
+  --error:#E5484D;--success:#30A46C;--input-bg:rgba(255,255,255,0.05);
+  --input-border:rgba(255,255,255,0.1);--shadow:0 8px 32px rgba(0,0,0,0.4);
+  --badge-bg:rgba(201,162,39,0.12);--badge-border:rgba(201,162,39,0.35);
+}
+[data-theme="light"]{
+  --bg:#F7F6F3;--surface:rgba(0,0,0,0.02);--surface-hover:rgba(0,0,0,0.04);
+  --border:rgba(0,0,0,0.08);--text:#1A1A1A;--text-muted:#6B6A67;
+  --accent:#A07D1A;--accent-dim:rgba(160,125,26,0.1);--accent-text:#8B6C14;
+  --card-bg:rgba(255,255,255,0.7);--card-border:rgba(0,0,0,0.08);
+  --error:#CD2B31;--success:#2D8E4E;--input-bg:rgba(0,0,0,0.03);
+  --input-border:rgba(0,0,0,0.12);--shadow:0 8px 32px rgba(0,0,0,0.08);
+  --badge-bg:rgba(160,125,26,0.08);--badge-border:rgba(160,125,26,0.25);
+}
+html{font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.55;color:var(--text);background:var(--bg)}
+body{min-height:100vh;position:relative;overflow-x:hidden}
+@media(prefers-reduced-motion:no-preference){
+  body::before{content:'';position:fixed;inset:0;z-index:0;
+    background:linear-gradient(135deg,rgba(201,162,39,0.06) 0%,transparent 40%,rgba(201,162,39,0.03) 60%,transparent 100%),
+               linear-gradient(225deg,rgba(201,162,39,0.04) 0%,transparent 50%);
+    background-size:200% 200%;animation:gradientShift 20s ease infinite;pointer-events:none}
+  @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+}
+@media(prefers-reduced-motion:reduce){body::before{animation:none}}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:24px 20px 64px}
+
+/* Header */
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:36px}
+.hdr-left h1{font-size:1.65rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+.hdr-left .sub{font-size:0.82rem;color:var(--text-muted);margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;font-size:0.72rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;background:var(--badge-bg);border:1px solid var(--badge-border);color:var(--accent-text);white-space:nowrap}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.theme-btn{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);padding:7px 12px;border-radius:8px;cursor:pointer;font-size:0.78rem;transition:background .15s,border-color .15s}
+.theme-btn:hover{background:var(--surface-hover);border-color:var(--accent)}
+
+/* Health */
+.health{display:inline-flex;align-items:center;gap:7px;font-size:0.78rem;color:var(--text-muted);margin-bottom:28px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--error);transition:background .25s}
+.dot.ok{background:var(--success)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:24px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+.card h2{font-size:0.95rem;font-weight:600;margin-bottom:16px;letter-spacing:-0.01em}
+
+/* Form */
+.form-row{display:flex;flex-direction:column;gap:10px}
+label{font-size:0.78rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em}
+input,select{background:var(--input-bg);border:1px solid var(--input-border);color:var(--text);
+  padding:10px 13px;border-radius:8px;font-size:0.88rem;font-family:inherit;
+  transition:border-color .15s,box-shadow .15s;outline:none}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+input::placeholder{color:var(--text-muted);opacity:.6}
+select{cursor:pointer;-webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239B9A97'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border:none;
+  border-radius:8px;font-size:0.85rem;font-weight:600;font-family:inherit;cursor:pointer;
+  background:var(--accent);color:#fff;transition:opacity .15s,transform .1s;min-height:40px}
+.btn:hover{opacity:.88}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{background:var(--surface-hover)}
+
+/* Spinner */
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn.loading .spinner{display:block}
+.btn.loading .btn-label{display:none}
+
+/* Result */
+.result{margin-top:16px;display:none}
+.result.show{display:block}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.result-item{display:flex;flex-direction:column}
+.result-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:2px}
+.result-value{font-size:0.95rem;font-weight:600;color:var(--text)}
+.result-value.accent{color:var(--accent-text)}
+.result-full{grid-column:1/-1}
+
+/* Trace */
+.trace-pre{background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;
+  padding:14px;font-size:0.78rem;line-height:1.6;overflow-x:auto;color:var(--text);
+  max-height:420px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,monospace}
+
+/* Models table */
+.models-section{grid-column:1/-1}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:0.82rem}
+th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);color:var(--text-muted);
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:hover td{background:var(--surface)}
+.status-pill{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;
+  padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.03em}
+.status-pill.active{background:rgba(48,164,108,0.12);color:var(--success)}
+.status-pill.inactive{background:rgba(229,72,77,0.12);color:var(--error)}
+.status-pill.loading{background:rgba(201,162,39,0.12);color:var(--accent-text)}
+
+/* Error box */
+.err-box{margin-top:14px;padding:12px 14px;border-radius:8px;font-size:0.82rem;display:none;
+  background:rgba(229,72,77,0.08);border:1px solid rgba(229,72,77,0.25);color:var(--error)}
+.err-box.show{display:block}
+
+/* Footer */
+.foot{text-align:center;margin-top:48px;font-size:0.72rem;color:var(--text-muted);opacity:.6}
+
+/* Focus visible */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="hdr-left">
+      <h1>Drug Discovery Engine</h1>
+      <div class="sub">research platform foundation</div>
+    </div>
+    <div class="hdr-right">
+      <span class="badge">Research Use Only &mdash; Not a Medical Device</span>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">Light</button>
+    </div>
+  </header>
+
+  <div class="health" id="healthIndicator">
+    <span class="dot" id="healthDot"></span>
+    <span id="healthText">Checking API...</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- Predict -->
+    <div class="card">
+      <h2>Predict a Property</h2>
+      <form class="form-row" id="predictForm" autocomplete="off">
+        <label for="smilesInput">SMILES String</label>
+        <input id="smilesInput" type="text" placeholder="e.g. CC(=O)Oc1ccccc1C(=O)O" required spellcheck="false">
+        <label for="propSelect">Property</label>
+        <select id="propSelect">
+          <option value="logp">logP (demo)</option>
+        </select>
+        <button class="btn" id="predictBtn" type="submit">
+          <span class="spinner"></span>
+          <span class="btn-label">Run Prediction</span>
+        </button>
+      </form>
+      <div class="err-box" id="predictError"></div>
+      <div class="result" id="predictResult">
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-label">Property</span>
+            <span class="result-value" id="rProp">-</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Value</span>
+            <span class="result-value accent" id="rValue">-</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Confidence</span>
+            <span class="result-value" id="rConf">-</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Model</span>
+            <span class="result-value" id="rModel">-</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Dataset Version</span>
+            <span class="result-value" id="rDataset">-</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Trace ID</span>
+            <span class="result-value" id="rTrace">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trace -->
+    <div class="card">
+      <h2>Prediction Trace</h2>
+      <form class="form-row" id="traceForm" autocomplete="off">
+        <label for="traceInput">Trace ID</label>
+        <input id="traceInput" type="text" placeholder="demo-0001" spellcheck="false">
+        <button class="btn btn-ghost" id="traceBtn" type="submit">
+          <span class="spinner" style="border-color:var(--text-muted);border-top-color:var(--text)"></span>
+          <span class="btn-label">Fetch</span>
+        </button>
+      </form>
+      <div class="err-box" id="traceError"></div>
+      <pre class="trace-pre" id="traceOutput">{"trace_id":"demo-0001","status":"awaiting query"}</pre>
+    </div>
+
+    <!-- Models -->
+    <div class="card models-section">
+      <h2>Models</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Version</th><th>Status</th><th>Dataset</th><th>Created</th></tr></thead>
+          <tbody id="modelsBody"><tr><td colspan="5" style="color:var(--text-muted)">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">Drug Discovery Engine &mdash; For research use only</div>
+
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const api = (path, opts) => fetch(path, opts).then(async r => {
+    if(!r.ok){const j = await r.json().catch(()=>({})); throw new Error(j.detail||('HTTP '+r.status));}
+    return r.json();
+  });
+
+  /* Theme */
+  const html = document.documentElement;
+  const saved = localStorage.getItem('dde-theme');
+  if(saved) html.dataset.theme = saved;
+  function syncThemeBtn(){
+    $('#themeToggle').textContent = html.dataset.theme==='dark'?'Light':'Dark';
+  }
+  syncThemeBtn();
+  $('#themeToggle').addEventListener('click',()=>{
+    html.dataset.theme = html.dataset.theme==='dark'?'light':'dark';
+    localStorage.setItem('dde-theme', html.dataset.theme);
+    syncThemeBtn();
+  });
+
+  /* Health */
+  function checkHealth(){
+    api('/health').then(d=>{
+      $('#healthDot').classList.add('ok');
+      $('#healthText').textContent='API: '+d.status;
+    }).catch(()=>{
+      $('#healthDot').classList.remove('ok');
+      $('#healthText').textContent='API: unreachable';
+    });
+  }
+  checkHealth();
+  setInterval(checkHealth,30000);
+
+  /* Models */
+  function loadModels(){
+    api('/api/v1/models').then(d=>{
+      const m=d.models||[];
+      if(!m.length){$('#modelsBody').innerHTML='<tr><td colspan="5" style="color:var(--text-muted)">No models registered</td></tr>';return;}
+      $('#modelsBody').innerHTML=m.map(r=>`<tr>
+        <td>${esc(r.name)}</td><td>${esc(r.version)}</td>
+        <td><span class="status-pill ${(r.status||'').toLowerCase()==='active'?'active':'inactive'}">${esc(r.status)}</span></td>
+        <td>${esc(r.dataset_version)}</td><td>${fmtDate(r.created_at)}</td></tr>`).join('');
+    }).catch(()=>{
+      $('#modelsBody').innerHTML='<tr><td colspan="5" style="color:var(--error)">Failed to load models</td></tr>';
+    });
+  }
+  loadModels();
+
+  /* Predict */
+  $('#predictForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const smiles=$('#smilesInput').value.trim();
+    if(!smiles) return;
+    const btn=$('#predictBtn');
+    btn.classList.add('loading');btn.disabled=true;
+    $('#predictError').classList.remove('show');
+    $('#predictResult').classList.remove('show');
+    api('/api/v1/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({smiles})})
+    .then(d=>{
+      const o=d.output||{};
+      $('#rProp').textContent=o.property||'-';
+      $('#rValue').textContent=o.value!=null?Number(o.value).toFixed(2):'-';
+      $('#rConf').textContent=o.confidence!=null?(o.confidence*100).toFixed(1)+'%':'-';
+      $('#rModel').textContent=(d.model_name||'')+' '+(d.model_version||'');
+      $('#rDataset').textContent=d.dataset_version||'-';
+      $('#rTrace').textContent=d.trace_id||'-';
+      $('#predictResult').classList.add('show');
+    }).catch(err=>{
+      $('#predictError').textContent=err.message||'Request failed';
+      $('#predictError').classList.add('show');
+    }).finally(()=>{btn.classList.remove('loading');btn.disabled=false;});
+  });
+
+  /* Trace */
+  $('#traceForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const tid=$('#traceInput').value.trim();
+    if(!tid) return;
+    const btn=$('#traceBtn');
+    btn.classList.add('loading');btn.disabled=true;
+    $('#traceError').classList.remove('show');
+    api('/api/v1/traces/'+encodeURIComponent(tid))
+    .then(d=>{$('#traceOutput').textContent=JSON.stringify(d,null,2);})
+    .catch(err=>{
+      $('#traceOutput').textContent='';
+      $('#traceError').textContent=err.message||'Trace not found';
+      $('#traceError').classList.add('show');
+    }).finally(()=>{btn.classList.remove('loading');btn.disabled=false;});
+  });
+
+  /* Helpers */
+  function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+  function fmtDate(s){if(!s)return'-';try{return new Date(s).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}catch{return s;}}
+})();
+</script>
+</body>
+</html>
