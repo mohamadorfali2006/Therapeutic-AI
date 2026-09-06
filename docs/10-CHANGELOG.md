@@ -2,6 +2,11 @@
 
 All notable changes. Format: dated entries per completed feature/phase.
 
+## 2026-09-06 — Dashboard Visual QA passed
+- **Added:** Playwright visual-QA suite (`product/drug-discovery-engine/tests/qa_dashboard.py`) + screenshots in `tests/qa-screenshots/`.
+- **Verified:** 12/12 checks pass including theme toggle (dark `#0A0A0B` ↔ light `#F7F6F3`), predict flow renders value, trace fetch, invalid SMILES → 422. Screenshots saved for human review (model lacks image input).
+- **Fixed:** theme-toggle test measured wrong element (now checks `html[data-theme]` + canvas bg).
+
 ## 2026-09-06 — Agent company + Drug Discovery Engine foundation
 - **Added:** `company/` — 9 agent-staffed departments (leadership, ai-research, cdd, wetlab, platform-eng, regulated-ai, regulatory, data, business), each with charter, agent roster, SOPs, guardrails. Master `company/00-OPERATING-MODEL.md` constitution.
 - **Added:** Drug Discovery Engine MVP (`product/drug-discovery-engine/`): FastAPI backend (model registry, prediction, validation gate, provenance/traces), pure-Python ML baseline (features → sklearn RandomForest, seed data, train/evaluate), append-only provenance store, static web dashboard, Dockerfile + docker-compose + CI.
