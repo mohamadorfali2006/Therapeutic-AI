@@ -16,4 +16,3 @@ HANDOFF.md  # Session continuity
 - `docs/02-ARCHITECTURE.md` — system architecture (Mermaid).
 - `org/README.md` — organization chart summary.
 
-_No application code yet — this is the planning/org-deliverable deliverable. Phase 2 engineering starts the software build._
